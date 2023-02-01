@@ -54,27 +54,31 @@ async function createCuotas() {
     });
 }
 
-function onClickProductoRadio(elemento) {
-    const tipo = elemento.value
+function onClickProductoRadio() {
+    const elemento = $(this)
+    const tipo = elemento.val()
     const precio = datos['productos'][tipo]['precio']
 
     localStorage.setItem('precioProductoSeleccionado', precio)
 }
 
-function onClickTarjetaRadio(elemento) {
-    const tipo = elemento.value
+function onClickTarjetaRadio() {
+    const elemento = $(this)
+    const tipo = elemento.val()
     localStorage.setItem('tarjetaSeleccionada', tipo)
 }
 
-function onClickCuotasRadio(elemento) {
-    const cuotas = elemento.value
+function onClickCuotasRadio() {
+    const elemento = $(this)
+    const cuotas = elemento.val()
     const tarjeta = localStorage.getItem('tarjetaSeleccionada')
     const coeficienteDeInteres = datos['tarjetas'][tarjeta]['cuotas'][cuotas]['coeficienteDeInteres']
     localStorage.setItem('coeficienteDeInteresSeleccionado', coeficienteDeInteres)
 }
 
-function onClickJubiladoRadio(elemento) {
-    const esJubilado = elemento.value === 'true'
+function onClickJubiladoRadio() {
+    const elemento = $(this)
+    const esJubilado = elemento.val() === 'true'
     localStorage.setItem('esJubilado', esJubilado)
 }
 
@@ -99,9 +103,9 @@ function onClickCalcularButton() {
     await createTarjetas()
     await createCuotas()
 
-    document.getElementsByName('radioProducto').forEach((el) => el.addEventListener('click', () => { onClickProductoRadio(el)}))
-    document.getElementsByName('radioTarjeta').forEach((el) => el.addEventListener('click', () => { onClickTarjetaRadio(el)}))
-    document.getElementsByName('radioCuotas').forEach((el) => el.addEventListener('click', () => { onClickCuotasRadio(el) }))
-    document.getElementsByName('radioJubilado').forEach((el) => el.addEventListener('click', () => { onClickJubiladoRadio(el)}))
-    document.getElementById('calcularButton').addEventListener('click', onClickCalcularButton)
+    $("[name='radioProducto']").each((index, el) => $(el).click(onClickProductoRadio))
+    $("[name='radioTarjeta']").each((index, el) => $(el).click(onClickTarjetaRadio))
+    $("[name='radioCuotas']").each((index, el) => $(el).click(onClickCuotasRadio))
+    $("[name='radioJubilado']").each((index, el) => $(el).click(onClickJubiladoRadio))
+    $("#calcularButton").click(onClickCalcularButton)
 })();
